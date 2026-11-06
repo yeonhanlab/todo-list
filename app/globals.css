@@ -1,4 +1,9 @@
+@import url("https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css");
 @import "tailwindcss";
+
+@theme {
+    --font-sans: "NanumSquare", sans-serif;
+}
 
 @theme {
     /* slate (본문, 배경, 선 등 기본 색) */
