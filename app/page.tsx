@@ -1,3 +1,8 @@
-export default function Home() {
-    return <div>홈</div>;
+import { getTodos } from "@/lib/api";
+
+export default async function Home() {
+
+    const todos = await getTodos();
+
+    return <div>{JSON.stringify(todos)}</div>;
 }
