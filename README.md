@@ -14,6 +14,7 @@ Readme · MD
 | 프레임워크 | Next.js (App Router) |
 | 언어 | TypeScript |
 | 스타일링 | Tailwind CSS |
+| HTTP 통신 | axios (인스턴스로 공통 설정 관리) |
 | 패키지 매니저 | pnpm |
 | 코드 포맷터 | Prettier |
 | 배포 | Vercel |
@@ -92,15 +93,19 @@ pnpm start
 
 ```
 .
-├── app/            # 페이지와 레이아웃 (App Router)
-├── lib/
-│   └── api.ts      # API 요청 함수 모음
+├── app/              # 페이지와 레이아웃 (App Router)
+├── api/
+│   ├── axiosInstance.ts   # axios 공통 설정 (baseURL, timeout)
+│   └── api.ts             # API 요청 함수 모음
 ├── types/
-│   └── todo.ts     # Todo 관련 타입 정의
-├── public/         # 정적 파일
-└── .env            # 환경변수 (공개 값만 포함)
+│   └── todo.ts       # Todo 관련 타입 정의
+├── public/           # 정적 파일
+└── .env              # 환경변수 (공개 값만 포함)
 ```
 
 > 컴포넌트를 추가하면 `components/` 폴더 구조도 함께 정리합니다.
 
 ## 구현하며 고민한 점
+
+- **axios 인스턴스 사용**: API 주소와 tenantId를 `baseURL`에 한 번만 설정해서, 요청 함수에서는 `/items`처럼 경로만 쓰도록 했습니다.
+- **환경변수**: API 주소와 tenantId는 비밀 정보가 아니라 `.env`에 두고 커밋했습니다.

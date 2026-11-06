@@ -1,4 +1,4 @@
-import { getTodos } from "@/lib/api";
+import { getTodos } from "@/api/api";
 
 export default async function Home() {
 
