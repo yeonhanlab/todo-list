@@ -1,12 +1,14 @@
 import React from "react";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     isCompleted?: boolean;
     onToggle?: () => void;
+    href: string;
 }
 
-function CheckList({ isCompleted = false, onToggle, className, children, ...props }: Props) {
+function CheckList({ isCompleted = false, onToggle, href, className, children, ...props }: Props) {
     return (
         <div
             className={twMerge(
@@ -17,17 +19,16 @@ function CheckList({ isCompleted = false, onToggle, className, children, ...prop
                 className,
             )}
             {...props}>
-            <button
-                type="button"
-                onClick={onToggle}
-                className="cursor-pointer">
+            <button type="button" onClick={onToggle} className="cursor-pointer">
                 <img
                     src={isCompleted ? "/icon/checkbox-checked.svg" : "/icon/checkbox.svg"}
                     alt=""
                     className="w-8 h-8 shrink-0"
                 />
             </button>
-            <span className={isCompleted ? "line-through" : ""}>{children}</span>
+            <Link href={href} className={twMerge("flex-1", isCompleted && "line-through")}>
+                {children}
+            </Link>
         </div>
     );
 }

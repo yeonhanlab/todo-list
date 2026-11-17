@@ -3,7 +3,7 @@
 import { Item } from "@/types/todo";
 import { useRouter } from "next/navigation";
 import CheckList from "@/components/check-list";
-import { getTodo, patchTodo } from "@/api/api";
+import { patchTodo } from "@/api/api";
 
 interface Props {
     todo: Item;
@@ -18,7 +18,10 @@ export default function TodoItem({ todo }: Props) {
     };
 
     return (
-        <CheckList isCompleted={todo.isCompleted} onToggle={handleToggle}>
+        <CheckList
+            isCompleted={todo.isCompleted}
+            onToggle={handleToggle}
+            href={`/items/${todo.id}`}>
             {todo.name}
         </CheckList>
     );
