@@ -31,6 +31,7 @@ const SHADOW_STYLE = {
     icon: "shadow-[1.22px_4px_0_#0F172A]",
 };
 
+// 공용 버튼 : color(색), shape(모양), shadow(그림자), icon(앞의 아이콘)을 골라 쓴다
 function Button({
     color = "gray",
     shape = "pill",

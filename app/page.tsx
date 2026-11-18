@@ -3,9 +3,12 @@ import AddTodo from "@/components/add-todo";
 import { connection } from "next/server";
 import TodoItem from "@/components/todo-item";
 
+// 할 일 목록 페이지 (/) : 서버 컴포넌트라서 서버에서 직접 데이터를 가져온다
 export default async function Home() {
+    // 요청이 올 때마다 새로 렌더링하도록 (미리 만들어 두지 않도록) 설정
     await connection();
     const todos = await getTodos();
+    // 완료 여부로 TO DO / DONE 목록을 나눈다
     const doingTodos = todos.filter(todo => !todo.isCompleted);
     const doneTodos = todos.filter(todo => todo.isCompleted);
 

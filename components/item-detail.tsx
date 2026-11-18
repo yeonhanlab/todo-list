@@ -11,16 +11,19 @@ interface Props {
     todo: Item;
 }
 
+// 상세 화면 : 이름·메모·이미지를 수정하고 저장/삭제한다 (입력·클릭이 필요해서 클라이언트 컴포넌트)
 export default function ItemDetail({ todo }: Props) {
-
     const router = useRouter();
+    // 수정 중인 값들은 상태로 들고 있다가 '수정 완료'를 누를 때 한 번에 저장한다
     const [name, setName] = useState(todo.name);
     const [memo, setMemo] = useState(todo.memo ?? "");
     const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
     const [imageUrl, setImageUrl] = useState(todo.imageUrl ?? "");
 
+    // 숨겨둔 파일 선택창(<input type="file">)을 + 버튼으로 대신 열기 위한 참조
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // 파일을 고르면 조건(영문 이름, 5MB 이하)을 검사하고 서버에 업로드한다
     const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -39,21 +42,24 @@ export default function ItemDetail({ todo }: Props) {
             return;
         }
 
+        // 업로드가 끝나면 받은 주소를 상태에 저장해 미리 보여준다
         try {
             const { url } = await postImage(file);
             setImageUrl(url);
         } catch {
             alert("이미지 업로드에 실패했어요.");
         }
-        e.target.value = "";
+        e.target.value = ""; // 같은 파일을 다시 고를 수 있도록 선택 초기화
     };
 
+    // 수정 완료 : 입력한 내용을 서버에 저장하고 목록 페이지로 이동
     const handleSave = async () => {
-        if (!name.trim()) return;
+        if (!name.trim()) return; // 이름이 비어 있으면 저장하지 않는다
         await patchTodo(todo.id, { name, memo, imageUrl: imageUrl || undefined, isCompleted });
         router.push("/");
     };
 
+    // 삭제하기 : 서버에서 삭제하고 목록 페이지로 이동
     const handleDelete = async () => {
         await deleteTodo(todo.id);
         router.push("/");

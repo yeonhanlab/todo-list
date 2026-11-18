@@ -5,6 +5,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     className?: string;
 }
 
+// 공용 입력창 : value, onChange 등 input의 속성을 그대로 받아 쓴다
 function Search({ className, ...props }: Props) {
     return (
         <input
